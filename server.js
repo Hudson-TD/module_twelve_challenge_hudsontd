@@ -1,6 +1,6 @@
 // Imports
 const inquirer = require('inquirer');
-//const cTable = require('console.table');
+const cTable = require('console.table');
 const db = require('./config/connection')
 
 // DB connection with hidden credentials via dotenv package
@@ -17,49 +17,80 @@ function init () {
             name: 'choice',
             message: 'What would you like to do?',
             choices: [
-                "View All Departments",
-                "View All Roles",
-                "View All Employees",
-                "Add Department",
-                "Add Role",
-                "Add Employee",
-                "Update Employee Role",
-                "Quit",
+                'View All Departments',
+                'View All Roles',
+                'View All Employees',
+                'Add Department',
+                'Add Role',
+                'Add Employee',
+                'Update Employee Role',
+                // 8 options makes the prompt list act weird, holding off for now
+                // 'Quit',
             ]
         })
         .then(function ({ choice }) {
             switch (choice) {
-                case "View All Departments":
+                case 'View All Departments':
                 viewDepartments();
                 break;
 
-                case "View All Roles":
+                case 'View All Roles':
                 viewRoles();
                 break;
 
-                case "View All Employees":
+                case 'View All Employees':
                 viewEmployees();
                 break;
 
-                case "Add Department":
+                case 'Add Department':
                 addDepartment();
                 break;
 
-                case "Add Role":
+                case 'Add Role':
                 addRole();
                 break;
 
-                case "Add Employee":
+                case 'Add Employee':
                 addEmployee();
                 break;
 
-                case "Update Employee Role":
+                case 'Update Employee Role':
                 updateEmployee();
                 break;
-
-                case "Quit":
-                db.end();
-                break;
+                // 8 options makes the prompt list act weird, holding off for now
+                // case 'Quit':
+                // db.end();
+                // break;
             }
         });
+};
+
+//Selecting all data from 'departments' table and showing that in the terminal
+function viewDepartments() {
+    db.query('SELECT * FROM departments', function (err, result, fields) {
+        if (err) throw err;
+          console.log('\n', "Viewing All Departments: ");
+          console.table(result);
+        });
+    init();
+};
+
+//Selecting all data from 'roles' table and showing that in the terminal
+function viewRoles() {
+    db.query('SELECT * FROM roles', function (err, result, fields) {
+        if (err) throw err;
+          console.log('\n', "Viewing All Roles: ");
+          console.table(result);
+        });
+    init();
+};
+
+//Selecting all data from 'employees' table and showing that in the terminal
+function viewEmployees() {
+    db.query('SELECT * FROM employees', function (err, result, fields) {
+        if (err) throw err;
+          console.log('\n', "Viewing All Employees: ");
+          console.table(result);
+        });
+    init();
 };
