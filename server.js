@@ -71,8 +71,8 @@ function viewDepartments() {
         if (err) throw err;
           console.log('\n', "Viewing All Departments: ");
           console.table(result);
+          init();
         });
-    init();
 };
 
 //Selecting all data from 'roles' table and showing that in the terminal
@@ -81,8 +81,8 @@ function viewRoles() {
         if (err) throw err;
           console.log('\n', "Viewing All Roles: ");
           console.table(result);
+          init();
         });
-    init();
 };
 
 //Selecting all data from 'employees' table and showing that in the terminal
@@ -91,6 +91,6 @@ function viewEmployees() {
         if (err) throw err;
           console.log('\n', "Viewing All Employees: ");
           console.table(result);
+          init();
         });
-    init();
 };
