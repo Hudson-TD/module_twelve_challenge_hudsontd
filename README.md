@@ -20,6 +20,8 @@ You will first need to download the repository and insert a .env file into the m
 
 Once all of the installation steps are taken care of you can type 'node server.js' into the terminal to start the application. From there you can follow along with the main directory menu to view, insert, and update the data.
 
+Check out a short video of the functionality here: https://drive.google.com/file/d/1YzcGtc0RtgDjNV1beDWeCRaCcffI1iqX/view
+
 ## Contributing
 
 Thank you for your interest in contributing, however I am not looking for additional contributions at this time.
