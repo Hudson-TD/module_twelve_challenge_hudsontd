@@ -66,7 +66,7 @@ function init() {
     });
 }
 
-// Array for storing loop values
+// Array for storing looped values
 var roleSelection = [];
 // Function creating selector list out of all existing roles in the DB
 function selectRole() {
@@ -78,7 +78,7 @@ function selectRole() {
   });
   return roleSelection;
 }
-// Array for storing loop values
+// Array for storing looped values
 var managerSelection = [];
 // Function creating selector list out of all existing managers in the DB
 function selectManager() {
@@ -255,3 +255,62 @@ function addRole() {
     }
   );
 }
+
+// Updating role value for an existing employee and inserting data into DB table
+const updateEmployee = () => {
+  // Creating selector list out of all employees
+  db.query("SELECT * FROM employees", (err, res) => {
+    if (err) throw err;
+    // Array for storing looped values
+    const employeeChoice = [];
+    res.forEach(({ first_name, last_name, id }) => {
+      employeeChoice.push({
+        name: first_name + " " + last_name,
+        value: id,
+      });
+    });
+
+    // Creating selector list out of all roles
+    db.query("SELECT * FROM roles", (err, res) => {
+      if (err) throw err;
+      // Array for storing looped values
+      const roleChoice = [];
+      res.forEach(({ title, id }) => {
+        roleChoice.push({
+          name: title,
+          value: id,
+        });
+      });
+
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "id",
+            choices: employeeChoice,
+            message: "whose role do you want to update?",
+          },
+          {
+            type: "list",
+            name: "role_id",
+            choices: roleChoice,
+            message: "what is the employee's new role?",
+          },
+        ])
+        .then((input) => {
+          db.query(
+            `UPDATE employees SET ? WHERE ?? = ?;`,
+            [{ role_id: input.role_id }, "id", input.id],
+            (err, res) => {
+              if (err) throw err;
+              console.log("Your update has been made successfully!");
+              init();
+            }
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+  });
+};
